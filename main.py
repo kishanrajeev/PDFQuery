@@ -11,7 +11,7 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def new_palm():
-    document_content = input("Paste your entire document here: ")
+    document_content = input("Paste your entire document here or enter x to exit the program: ")
     print("At any point, type 'new' to paste a new document.")
 
     while True:
@@ -40,7 +40,7 @@ def new_palm():
                     response = palm.chat(context=document_content, messages=(f'{Og_response} questions about the document. Question: {question}'), temperature=1)
                     print(response.last)
 
-        elif Og_response == 'exit':
+        elif Og_response == 'x':
             exit()
         elif Og_response == 'new':
             new_palm()
