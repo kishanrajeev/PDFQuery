@@ -12,8 +12,9 @@ def clear_console():
 
 def new_palm():
     document_content = input("Paste your entire document here: ")
+    print("At any point, type 'new' to paste a new document.")
+
     while True:
-        print("At any point, type 'new' to paste a new document.")
         Og_response = input("Would you like PalM to ask or answer your questions about the document?(ask/answer): ")
         if Og_response == 'ask':
             palm.configure(api_key=k2key.API_KEY)
