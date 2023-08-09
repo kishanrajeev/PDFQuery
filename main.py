@@ -15,20 +15,30 @@ def new_palm():
     print("At any point, type 'new' to paste a new document.")
 
     while True:
-        Og_response = input("Would you like PalM to ask or answer your questions about the document?(ask/answer): ")
+        Og_response = input("Would you like PalM to ask you questions, or answer your questions about the document?(ask/answer): ")
         if Og_response == 'ask':
-            palm.configure(api_key=k2key.API_KEY)
 
-            response = palm.chat(context=document_content, messages=(f'{Og_response} questions about the document provided.'), temperature=1)
-            print(response.last)
+            palm.configure(api_key=k2key.API_KEY)
+            while True:
+                response = palm.chat(context=document_content, messages=(f'{Og_response} ask one singular question about this document. Do not repeat questions.'), temperature=1)
+                print(response.last)
+                answer = input('Enter the answer to the question or press x to exit: ')
+                if answer == 'x':
+                    new_palm()
+                else:
+                    response = response.reply(f'I answered: {answer}. Answer either correct or wrong based on what I entered.')
+                    print(response.last)
+
 
         elif Og_response == 'answer':
-            question = input("What is your question?: ")
-
             palm.configure(api_key=k2key.API_KEY)
-
-            response = palm.chat(context=document_content, messages=(f'{Og_response} questions about the document. Question: {question}'), temperature=1)
-            print(response.last)
+            while True:
+                question = input("Enter your question or enter x to exit: ")
+                if question == 'x':
+                    new_palm()
+                else:
+                    response = palm.chat(context=document_content, messages=(f'{Og_response} questions about the document. Question: {question}'), temperature=1)
+                    print(response.last)
 
         elif Og_response == 'exit':
             exit()
